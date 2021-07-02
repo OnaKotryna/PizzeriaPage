@@ -12,6 +12,7 @@ $(document).ready(function() {
             $('.pizzaMenu').hide(); 
             $('.pizzaForm').show();
             $('.note').hide(); 
+            $('.sort').hide(); 
             
         })
     
@@ -43,7 +44,7 @@ function addPhotos(){
 
 // create pizza 
 function createPizza(){
-
+    
     pizzaName = $('#pizzaName').val();
     addPhotos();
     const newPizza = {
@@ -111,12 +112,17 @@ function displayPizzas(){
 
 function displaySortedPizzas(pizzas){
     for(i = 0; i < pizzas.length; i++){
-        
-        pizzaArticleDetails = "id=\"pizza" + i +
-        "\" class=\"pizzaBox\"> <div class=\"nameOfPizza\">" + pizzas[i].name + "</div>" +
-        "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>" +
-        "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
+        articleId = "<article id=\"pizza" + i + "\" class=\"pizzaBox\"> " ;
+        articlePizzaName = "<div class=\"nameOfPizza\">" + pizzas[i].name + "</div>";
+        articlePizzaPrice = "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>";
+        articlePizzaToppings = "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
 
+        if(pizzas[i].photos.length != 0){
+            articlePizzaPhotos = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photos[0] + ".jpg\" >"
+        } else {
+            articlePizzaPhotos = "";
+        }
+        
         if(pizzas[i].heat != null){
             heat = "";
             for(j = 0; j < pizzas[i].heat; j++){
@@ -127,13 +133,11 @@ function displaySortedPizzas(pizzas){
         } else {
             heat = "";
         }
-        pizzaArticlePhotos = "";
-        for(j = 0; j < pizzas[i].photos.length; j++){
-            image = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photos[j] + ".jpg\" >";
-            pizzaArticlePhotos = pizzaArticlePhotos.concat(image);
-        }
+
+        pizzaArticleDetails = articlePizzaName + heat + articlePizzaPrice + articlePizzaToppings;
         
-        $('.pizzaMenu').append("<article " + pizzaArticleDetails + heat + pizzaArticlePhotos +"</article>");
+        
+        $('.pizzaMenu').append(articleId + pizzaArticleDetails + articlePizzaPhotos +"</article>");
     }
 }
 
