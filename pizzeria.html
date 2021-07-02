@@ -18,7 +18,20 @@
         </nav>
         <section class="page">
             <div class="note">There are no added pizzas.</div>
-
+            <select name="sort" class="sort" onclick="displayPizzas()">
+                <optgroup label="By Name">
+                    <option value="byNameAsc" selected>By Name A-Z</option>
+                    <option value="byNameDesc">By Name Z-A</option>
+                </optgroup>
+                <optgroup label="By Price">
+                    <option value="byPriceAsc">Lowest to Highest</option>
+                    <option value="byPriceDesc">Highest to Lowest</option>
+                </optgroup>
+                <optgroup label="By Heat">
+                    <option value="byHeatAsc">Lowest to Highest</option>
+                    <option value="byHeatDesc">Highest to Lowest</option>
+                </optgroup>
+            </select>
             <section class="pizzaMenu">
                 <!-- <article id="pizza" class="pizzaBox">
                     <div class="nameOfPizza"></div>

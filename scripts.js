@@ -98,40 +98,85 @@ function displayPizzas(){
 
     if(sessionStorage.pizzas) {
         $('.note').hide(); 
+        clearMenu();
         
         pizzas = getPizzas();
+        sortedPizzas = getSortedPizzaList(pizzas);
+        displaySortedPizzas(pizzas);
 
-        clearMenu();
-    
-        for(i = 0; i < pizzas.length; i++){
-        
-            pizzaArticleDetails = "id=\"pizza" + i +
-            "\" class=\"pizzaBox\"> <div class=\"nameOfPizza\">" + pizzas[i].name + "</div>" +
-            "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>" +
-            "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
-
-            if(pizzas[i].heat != null){
-                heat = "";
-                for(j = 0; j < pizzas[i].heat; j++){
-                    chillies = "<img class=\"pizzasHeat\" src=\"photos/chilli.png\">";
-                    heat = heat.concat(chillies);
-                }
-                heat = heat.concat("<br/>");
-            } else {
-                heat = "";
-            }
-            pizzaArticlePhotos = "";
-            for(j = 0; j < pizzas[i].photos.length; j++){
-                image = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photos[j] + ".jpg\" >";
-                pizzaArticlePhotos = pizzaArticlePhotos.concat(image);
-            }
-            
-            $('.pizzaMenu').append("<article " + pizzaArticleDetails + heat + pizzaArticlePhotos +"</article>");
-        }
-        
     } else {
         $('.note').show(); 
     }
+}
+
+function displaySortedPizzas(pizzas){
+    for(i = 0; i < pizzas.length; i++){
+        
+        pizzaArticleDetails = "id=\"pizza" + i +
+        "\" class=\"pizzaBox\"> <div class=\"nameOfPizza\">" + pizzas[i].name + "</div>" +
+        "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>" +
+        "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
+
+        if(pizzas[i].heat != null){
+            heat = "";
+            for(j = 0; j < pizzas[i].heat; j++){
+                chillies = "<img class=\"pizzasHeat\" src=\"photos/chilli.png\">";
+                heat = heat.concat(chillies);
+            }
+            heat = heat.concat("<br/>");
+        } else {
+            heat = "";
+        }
+        pizzaArticlePhotos = "";
+        for(j = 0; j < pizzas[i].photos.length; j++){
+            image = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photos[j] + ".jpg\" >";
+            pizzaArticlePhotos = pizzaArticlePhotos.concat(image);
+        }
+        
+        $('.pizzaMenu').append("<article " + pizzaArticleDetails + heat + pizzaArticlePhotos +"</article>");
+    }
+}
+
+function getSortedPizzaList(pizzas){
+    sort = $('.sort').val();
+    if(sort == "byNameAsc"){
+        pizzas.sort(function(a, b) {
+            var nameA = a.name; 
+            var nameB = b.name; 
+            return sortPizzasAsc(nameA, nameB);
+        });
+    } else if(sort == "byNameDesc"){
+        pizzas.sort(function(a, b) {
+            var nameA = a.name; 
+            var nameB = b.name; 
+            return sortPizzasDesc(nameA, nameB);
+        });
+    } else if(sort == "byPriceAsc"){
+        pizzas.sort(function(a, b) {
+            var priceA = a.price;
+            var priceB = b.price; 
+            return sortPizzasAsc(priceA, priceB);
+        });
+    } else if(sort == "byPriceDesc"){
+        pizzas.sort(function(a, b) {
+            var priceA = a.price;
+            var priceB = b.price; 
+            return sortPizzasDesc(priceA, priceB);
+        });
+    } else if(sort == "byHeatAsc"){
+        pizzas.sort(function(a, b) {
+            var heatA = a.heat;
+            var heatB = b.heat; 
+            return sortPizzasAsc(heatA, heatB);
+        });
+    } else if(sort == "byHeatDesc"){
+        pizzas.sort(function(a, b) {
+            var heatA = a.heat;
+            var heatB = b.heat; 
+            return sortPizzasDesc(heatA, heatB);
+        });
+    }
+    return pizzas;
 }
 
 
@@ -140,6 +185,25 @@ function getPizzas() {
     return JSON.parse(sessionStorage.getItem('pizzas'));
 }
 
+function sortPizzasAsc(a, b){
+    if(a < b) {
+        return -1;
+    }
+    if(a > b) {
+        return 1;
+    }
+    return 0;
+}
+
+function sortPizzasDesc(a, b){
+    if(a > b) {
+        return -1;
+    }
+    if(a < b) {
+        return 1;
+    }
+    return 0;
+}
 // Clear menu
 function clearMenu(){
     if(document.getElementById('pizza0')){
