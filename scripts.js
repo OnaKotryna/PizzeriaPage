@@ -34,25 +34,19 @@ function addTopping(){
     }
 }
 
-var chosenPhotos = [];
-function addPhotos(){
-    photos = document.querySelectorAll('input[name="pizza"]:checked')
-    photos.forEach(photo => {
-        chosenPhotos.push(photo.value);
-    });
-}
+
 
 // create pizza 
 function createPizza(){
     
     pizzaName = $('#pizzaName').val();
-    addPhotos();
+
     const newPizza = {
         name: pizzaName,
         price: parseFloat($('#pizzaPrice').val()),
         heat: parseInt($('#pizzaHeat').val()),
         toppings: pizzaToppings,
-        photos: chosenPhotos
+        photo: document.querySelector('input[name="pizza"]:checked').value
     }
     
     if(sessionStorage.pizzas) {
@@ -116,12 +110,7 @@ function displaySortedPizzas(pizzas){
         articlePizzaName = "<div class=\"nameOfPizza\">" + pizzas[i].name + "</div>";
         articlePizzaPrice = "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>";
         articlePizzaToppings = "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
-
-        if(pizzas[i].photos.length != 0){
-            articlePizzaPhotos = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photos[0] + ".jpg\" >"
-        } else {
-            articlePizzaPhotos = "";
-        }
+        articlePizzaPhoto = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photo + ".jpg\" >"
         
         if(pizzas[i].heat != null){
             heat = "";
@@ -134,10 +123,10 @@ function displaySortedPizzas(pizzas){
             heat = "";
         }
 
-        pizzaArticleDetails = articlePizzaName + heat + articlePizzaPrice + articlePizzaToppings;
+        pizzaArticleDetails = articlePizzaName + heat + articlePizzaPrice + articlePizzaToppings + articlePizzaPhoto ;
         
         
-        $('.pizzaMenu').append(articleId + pizzaArticleDetails + articlePizzaPhotos +"</article>");
+        $('.pizzaMenu').append(articleId + pizzaArticleDetails + "</article>");
     }
 }
 

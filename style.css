@@ -86,11 +86,11 @@ label {
     margin: 5px;
 }
 
-input[type=checkbox] {
+input[type=radio] {
     display:none;
 }
 
-input[type=checkbox]:checked + label > img{
+input[type=radio]:checked + label > img{
     border-color: #420000;
     border-style: solid;
 
