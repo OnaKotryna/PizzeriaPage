@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<link rel="stylesheet" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="scripts.js"></script>
+        <title>Pizzeria</title>
+    </head>
+    <body>
+
+        <header>
+            <h1>Pizzeria</h1>
+        </header>
+        <nav>
+            <p class="menu">Menu</p>
+            <p class="newPizza">Add New Pizza</p>
+        </nav>
+        <section class="page">
+            <div class="note">There are no added pizzas.</div>
+
+            <section class="pizzaMenu">
+                <!-- <article id="pizza" class="pizzaBox">
+                    <div class="nameOfPizza"></div>
+                    <div class="priceOfPizza"></div>
+                    <div class="heatOfPizza"></div>
+                    <div class="toppingsOfPizza"></div>
+                    <img src="photos/xxx.jpg" class="menuPhoto">
+                </article> -->
+            </section>
+
+            <section class="pizzaForm">
+                <h2>Pizza's form:</h2>
+                <form id="form" action="pizzeria.html"> 
+                    
+                    <label for="pizzaName">Name:</label> 
+                        <input type="text" id="pizzaName" name="pizzaName" maxlength="30" placeholder="name" required>
+                        
+                    <label for="pizzaPrice">Price:</label> 
+                        <input type="number" id="pizzaPrice" name="pizzaPrice" min="0" step=".01" placeholder="00.00" required> 
+
+                    <label for="pizzaHeat">Heat:</label>
+                        <input type="number" id="pizzaHeat" name="pizzaHeat" min="1" max="3" placeholder="1-3" > 
+
+                    
+                    <label for="pizzaToppings">Toppings:</label> 
+                        <input type="text" id="pizzaToppings" name="pizzaToppings"> 
+
+                    <button type="button" onclick="addTopping();">Add</button>
+                  
+                    <section class="toppingList">
+                        <ul id="toppingList"></ul>
+                    </section>
+
+                    <label>Photos:</label> 
+                    <section class="photos"> 
+                        
+                        <input type="checkbox" value="pizza_01" id="pizza01" name="pizza"> 
+                        <label for="pizza01"><img src="photos/pizza_01.jpg"></label>
+
+                        <input type="checkbox" value="pizza_02" id="pizza02" name="pizza"> 
+                        <label for="pizza02"><img src="photos/pizza_02.jpg"></label>
+
+                        <input type="checkbox" value="pizza_03" id="pizza03" name="pizza"> 
+                        <label for="pizza03"><img src="photos/pizza_03.jpg"></label>
+
+                        <input type="checkbox" value="pizza_04" id="pizza04" name="pizza"> 
+                        <label for="pizza04"><img src="photos/pizza_04.jpg"></label>
+
+                        <input type="checkbox" value="pizza_05" id="pizza05" name="pizza"> 
+                        <label for="pizza05"><img src="photos/pizza_05.jpg"></label>
+
+                        <input type="checkbox" value="pizza_06" id="pizza06" name="pizza"> 
+                        <label for="pizza06"><img src="photos/pizza_06.jpg"></label>
+                        
+                        <input type="checkbox" value="pizza_07" id="pizza07" name="pizza"> 
+                        <label for="pizza07"><img src="photos/pizza_07.jpg"></label>
+
+                        <input type="checkbox" value="pizza_08" id="pizza08" name="pizza"> 
+                        <label for="pizza08"><img src="photos/pizza_08.jpg"></label>
+
+                        <input type="checkbox" value="pizza_09" id="pizza09" name="pizza"> 
+                        <label for="pizza09"><img src="photos/pizza_09.jpg"></label>
+
+                        <input type="checkbox" value="pizza_10" id="pizza010" name="pizza"> 
+                        <label for="pizza010"><img src="photos/pizza_10.jpg"></label>
+
+                    </section>
+                    
+                    <input type="button" id="addPizza" value="Add Pizza"/>
+
+                </form>
+            </section>
+        </section>
+    </body>
+</html>
