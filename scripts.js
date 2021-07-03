@@ -152,16 +152,16 @@ function displayPizzas(){
     if(sessionStorage.pizzas) {
         $('.note').hide(); 
         
-        clearMenu();
         
         pizzas = getPizzas();
+        clearMenu(pizzas);
         sortedPizzas = getSortedPizzaList(pizzas);
-        displaySortedPizzas(pizzas);
+        displaySortedPizzas(sortedPizzas);
 
     } else {
         $('.note').show(); 
         $('.sort').hide(); 
-    }
+    } 
 }
 
 function displaySortedPizzas(pizzas){
@@ -199,24 +199,23 @@ function displaySortedPizzas(pizzas){
 
 
 function deletePizza(pizzaToDelete){
-    alert("AAAAAAAAAAAAAAAAAAAA");
-    pizzas = getPizzas();
-    for(i = 0; i < pizzas.length; i++){
-        if(pizzas[i].name == pizzaToDelete){
-            const index = pizzas.indexOf(pizzas[i]);
-            if (index > -1) {
-                pizzas.splice(index, 1);
-                var clearMenu = document.getElementById('pizza' + index);
-                $(clearMenu).remove();
+
+    confirmation = confirm("Delete " + pizzaToDelete + " Pizza?")
+
+    if(confirmation){
+        pizzas = getPizzas();
+        for(i = 0; i < pizzas.length; i++){
+            if(pizzas[i].name == pizzaToDelete){
+                if (i > -1) {
+                    pizzas.splice(i, 1);
+                    sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
+                    break;
+                }
             }
         }
+        alert(pizzaToDelete + " is deleted.")
+        displayPizzas();
     }
-        
-    
-
-    sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
-    
-    displayPizzas();
 }
 
 function getSortedPizzaList(pizzas){
@@ -288,13 +287,8 @@ function sortPizzasDesc(a, b){
     return 0;
 }
 // Clear menu
-function clearMenu(){
-    if(document.getElementById('pizza0')){
-        for(i = 0; i < pizzas.length; i++){
-            var clearMenu = document.getElementById('pizza' + i);
-            $(clearMenu).remove();
-        }
-    }
+function clearMenu(pizzasToClear){
+    document.getElementById('pizzaMenu').innerHTML = "";
 }
 
 // Clear form 
