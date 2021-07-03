@@ -3,12 +3,14 @@ $(document).ready(function() {
     $('.sort').hide(); 
     $('.validationNote').hide(); 
 
+    // Button's 'Add Pizza' function
     $('#addPizza').click(function(){
         if(createPizza()){
             alert("Pizza Added Successfully!");
         }
     })
 
+    // Button's 'Add New Pizza' in Navigation bar function
     $('.newPizza').click(function (){
             $('.pizzaMenu').hide(); 
             $('.note').hide(); 
@@ -16,6 +18,7 @@ $(document).ready(function() {
             $('.pizzaForm').show();
         })
     
+    // Button's 'Menu' in Navigation bar function
     $('.menu').click(function () {
         displayPizzas();
     })
@@ -23,8 +26,10 @@ $(document).ready(function() {
 }); 
  
 var pizzaToppings = [];
+// Adding and saving toppings to array
 function addTopping(){
     topping = $('#pizzaToppings').val();
+    // validation for not empty field
     if(topping.length >= 1){
         $('#toppingNote').hide();
         pizzaToppings.push(topping);
@@ -36,11 +41,13 @@ function addTopping(){
     }
 }
 
+// Validation of Form Fields
 function validateFormFields(){
 
     validated = false;
     pizzaName = $('#pizzaName').val();
 
+    // Validation of Name field (cannot be empty)
     if(pizzaName.length < 1){
         $('#nameNote').text("Enter Pizza Name");
         $('#nameNote').show();
@@ -50,6 +57,7 @@ function validateFormFields(){
         validated = validated + true;
     }
     
+    // Validation of Name field (cannot be empty or negative)
     price = parseFloat($('#pizzaPrice').val());
     if(price <= 0 || isNaN(price)) {
         $('#priceNote').show();
@@ -59,6 +67,7 @@ function validateFormFields(){
         validated = validated + true;
     }
 
+    // Validation of Heat range 1-3
     heat = parseInt($('#pizzaHeat').val());
     if(heat < 0 || heat > 3) {
         $('#heatNote').show();
@@ -68,7 +77,7 @@ function validateFormFields(){
         validated = validated + true;
     }
 
-    // check if pizza has at least 2 toppings 
+    // Validation of Pizza's toppings. Must have at least 2 toppings 
     if(pizzaToppings.length < 2) {
         $('#toppingNote').show();
         $('#toppingNote').text("Enter at least 2 toppings");
@@ -81,16 +90,8 @@ function validateFormFields(){
     return validated;
 }
 
-function getPhoto(){
-    if(document.querySelector('input[name="pizza"]:checked')){
-        photo = document.querySelector('input[name="pizza"]:checked').value
-    } else {
-        photo = null;
-    }
-    return photo;
-}
 
-// create pizza 
+// Creates pizza and if is valid, adds to SessioStorage
 function createPizza(){
     
     if(validateFormFields()){
@@ -106,7 +107,7 @@ function createPizza(){
         
         if(sessionStorage.pizzas) {
             pizzas = getPizzas();
-            // check if name is unique
+            // Checks if name is unique
             if(!verifyUniqueName(pizzaName, pizzas)) {
                 alert("Pizza's name must be unique");
                 $('#nameNote').show();
@@ -117,22 +118,19 @@ function createPizza(){
             pizzas = [];
         }
 
-
-
         pizzas.push(newPizza);
-
         sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
 
         clearForm();
 
         return true;
     } else{
-        alert("Please Fill fields correctly");
+        alert("Please Fill Fields Correctly");
     }
     
 }
 
-// check if name is unique
+// Checks if name is unique
 function verifyUniqueName(name, pizzas){
     for(i = 0; i < pizzas.length; i++){
         if(name == pizzas[i].name){
@@ -142,7 +140,7 @@ function verifyUniqueName(name, pizzas){
     return true;
 }
 
-// display pizzas in menu page
+// Displays pizzas in menu page
 function displayPizzas(){
     $('.pizzaForm').hide(); 
     $('.pizzaMenu').show(); 
@@ -152,18 +150,23 @@ function displayPizzas(){
     if(sessionStorage.pizzas) {
         $('.note').hide(); 
         
-        
         pizzas = getPizzas();
         clearMenu(pizzas);
-        sortedPizzas = getSortedPizzaList(pizzas);
-        displaySortedPizzas(sortedPizzas);
-
+        // Checks if there are any pizzas in sessionStorage
+        if(pizzas.length > 0) {
+            sortedPizzas = getSortedPizzaList(pizzas);
+            displaySortedPizzas(sortedPizzas);
+        } else {
+            $('.note').show(); 
+            $('.sort').hide(); 
+        }
     } else {
         $('.note').show(); 
         $('.sort').hide(); 
     } 
 }
 
+// Displays pizzas in menu by adding new tags to html file
 function displaySortedPizzas(pizzas){
     for(i = 0; i < pizzas.length; i++){
         table = "<table class=\"pizzaDetails\"> "
@@ -197,7 +200,7 @@ function displaySortedPizzas(pizzas){
     }
 }
 
-
+// Deletes chosen pizza from SessionStorage
 function deletePizza(pizzaToDelete){
 
     confirmation = confirm("Delete " + pizzaToDelete + " Pizza?")
@@ -218,6 +221,24 @@ function deletePizza(pizzaToDelete){
     }
 }
 
+// Utils
+// Get Pizza List from SessionStorage
+function getPizzas() {
+    return JSON.parse(sessionStorage.getItem('pizzas'));
+}
+
+// Get a photo if chosen
+function getPhoto(){
+    if(document.querySelector('input[name="pizza"]:checked')){
+        photo = document.querySelector('input[name="pizza"]:checked').value
+    } else {
+        photo = null;
+    }
+    return photo;
+}
+
+// Sorting
+// Sorts Piza List by given choice
 function getSortedPizzaList(pizzas){
     sort = $('.sort').val();
     if(sort == "byNameAsc"){
@@ -260,13 +281,6 @@ function getSortedPizzaList(pizzas){
     return pizzas;
 }
 
-
-// Utils
-function getPizzas() {
-    return JSON.parse(sessionStorage.getItem('pizzas'));
-}
-
-// Sorting
 function sortPizzasAsc(a, b){
     if(a < b) {
         return -1;
@@ -286,8 +300,9 @@ function sortPizzasDesc(a, b){
     }
     return 0;
 }
-// Clear menu
-function clearMenu(pizzasToClear){
+
+// Clear pizzas menu
+function clearMenu(){
     document.getElementById('pizzaMenu').innerHTML = "";
 }
 
