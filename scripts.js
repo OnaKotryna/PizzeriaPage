@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('.note').hide(); 
     $('.sort').hide(); 
+    $('.validationNote').hide(); 
 
     $('#addPizza').click(function(){
         if(createPizza()){
@@ -10,13 +11,12 @@ $(document).ready(function() {
 
     $('.newPizza').click(function (){
             $('.pizzaMenu').hide(); 
-            $('.pizzaForm').show();
             $('.note').hide(); 
             $('.sort').hide(); 
-            
+            $('.pizzaForm').show();
         })
     
-    $('.menu').click(function (){
+    $('.menu').click(function () {
         displayPizzas();
     })
 
@@ -26,62 +26,119 @@ var pizzaToppings = [];
 function addTopping(){
     topping = $('#pizzaToppings').val();
     if(topping.length >= 1){
+        $('#toppingNote').hide();
         pizzaToppings.push(topping);
         document.getElementById('pizzaToppings').value = "";
         $('#toppingList').append("<li name=\"topping\">" + topping + "</li>");
     } else {
-        alert("Enter topping");     
+        $('#toppingNote').show();
+        $('#toppingNote').text("Enter topping");
     }
 }
 
+function validateFormFields(){
 
+    validated = false;
+    pizzaName = $('#pizzaName').val();
+
+    if(pizzaName.length < 1){
+        $('#nameNote').text("Enter Pizza Name");
+        $('#nameNote').show();
+        validated = false;
+    } else {
+        $('#nameNote').hide();
+        validated = validated + true;
+    }
+    
+    price = parseFloat($('#pizzaPrice').val());
+    if(price <= 0 || isNaN(price)) {
+        $('#priceNote').show();
+        validated = false;
+    } else {
+        $('#priceNote').hide();
+        validated = validated + true;
+    }
+
+    heat = parseInt($('#pizzaHeat').val());
+    if(heat < 0 || heat > 3) {
+        $('#heatNote').show();
+        validated = false;
+    } else if(heat > 0 && heat < 4){
+        $('#heatNote').hide();
+        validated = validated + true;
+    }
+
+    // check if pizza has at least 2 toppings 
+    if(pizzaToppings.length < 2) {
+        $('#toppingNote').show();
+        $('#toppingNote').text("Enter at least 2 toppings");
+        validated = false;
+    } else {
+        $('#toppingNote').hide();
+        validated = validated + true;
+    }
+
+    return validated;
+}
+
+function getPhoto(){
+    if(document.querySelector('input[name="pizza"]:checked')){
+        photo = document.querySelector('input[name="pizza"]:checked').value
+    } else {
+        photo = null;
+    }
+    return photo;
+}
 
 // create pizza 
 function createPizza(){
     
-    pizzaName = $('#pizzaName').val();
+    if(validateFormFields()){
+        pizzaName = $('#pizzaName').val();
 
-    const newPizza = {
-        name: pizzaName,
-        price: parseFloat($('#pizzaPrice').val()),
-        heat: parseInt($('#pizzaHeat').val()),
-        toppings: pizzaToppings,
-        photo: document.querySelector('input[name="pizza"]:checked').value
+        const newPizza = {
+            name: pizzaName,
+            price: parseFloat($('#pizzaPrice').val()),
+            heat: parseInt($('#pizzaHeat').val()),
+            toppings: pizzaToppings,
+            photo: getPhoto()
+        }
+        
+        if(sessionStorage.pizzas) {
+            pizzas = getPizzas();
+            // check if name is unique
+            if(!verifyUniqueName(pizzaName, pizzas)) {
+                alert("Pizza's name must be unique");
+                $('#nameNote').show();
+                $('#nameNote').text("Pizza's name must be unique");
+                return false;
+            }
+        } else {
+            pizzas = [];
+        }
+
+
+
+        pizzas.push(newPizza);
+
+        sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
+
+        clearForm();
+
+        return true;
+    } else{
+        alert("Please Fill fields correctly");
     }
     
-    if(sessionStorage.pizzas) {
-        pizzas = getPizzas();
-        // check if name is unique
-        if(!verifyUniqueName(pizzaName, pizzas)) {
-            alert("Pizza's name must be unique");
-            return false;
-        }
-    } else {
-        pizzas = [];
-    }
-    // check if pizza has at least 2 toppings 
-    if(pizzaToppings.length < 2){
-        alert("Pizza has to gave at least 2 toppings");
-        return false;
-    }
-
-    pizzas.push(newPizza);
-
-    sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
-
-    clearForm();
-
-    return true;
 }
 
 // check if name is unique
 function verifyUniqueName(name, pizzas){
     for(i = 0; i < pizzas.length; i++){
-        // if(name == pizzas[i].name){
-        //     return false;
-        // }
+        if(name == pizzas[i].name){
+            return false;
+        }
     }
-    
     return true;
 }
 
@@ -90,6 +147,7 @@ function displayPizzas(){
     $('.pizzaForm').hide(); 
     $('.pizzaMenu').show(); 
     $('.sort').show();  
+    $('.validationNote').hide(); 
 
     if(sessionStorage.pizzas) {
         $('.note').hide(); 
@@ -101,32 +159,37 @@ function displayPizzas(){
 
     } else {
         $('.note').show(); 
+        $('.sort').hide(); 
     }
 }
 
 function displaySortedPizzas(pizzas){
     for(i = 0; i < pizzas.length; i++){
-        articleId = "<article id=\"pizza" + i + "\" class=\"pizzaBox\"> " ;
-        articlePizzaName = "<div class=\"nameOfPizza\">" + pizzas[i].name + "</div>";
-        articlePizzaPrice = "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>";
-        articlePizzaToppings = "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
-        articlePizzaPhoto = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photo + ".jpg\" >"
-        
+        a_id = "<article id=\"pizza" + i + "\" class=\"pizzaBox\"> " ;
+        a_pizzaName = "<div class=\"nameOfPizza\">" + pizzas[i].name + "</div>";
+        a_pizzaPrice = "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>";
+        a_pizzaToppings = "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
+
         if(pizzas[i].heat != null){
-            heat = "";
+            a_heat = "";
             for(j = 0; j < pizzas[i].heat; j++){
                 chillies = "<img class=\"pizzasHeat\" src=\"photos/chilli.png\">";
-                heat = heat.concat(chillies);
+                a_heat = a_heat.concat(chillies);
             }
-            heat = heat.concat("<br/>");
+            a_heat = a_heat.concat("<br/>");
         } else {
-            heat = "";
+            a_heat = "";
+        }
+        
+        if (pizzas[i].photo != null) {
+            a_pizzaPhoto = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photo + ".jpg\" >"
+        } else {
+            a_pizzaPhoto = "";
         }
 
-        pizzaArticleDetails = articlePizzaName + heat + articlePizzaPrice + articlePizzaToppings + articlePizzaPhoto ;
+        pizzaArticleDetails = a_pizzaName + a_heat + a_pizzaPrice + a_pizzaToppings + a_pizzaPhoto ;
         
-        
-        $('.pizzaMenu').append(articleId + pizzaArticleDetails + "</article>");
+        $('.pizzaMenu').append(a_id + pizzaArticleDetails + "</article>");
     }
 }
 
@@ -178,6 +241,7 @@ function getPizzas() {
     return JSON.parse(sessionStorage.getItem('pizzas'));
 }
 
+// Sorting
 function sortPizzasAsc(a, b){
     if(a < b) {
         return -1;
@@ -214,11 +278,10 @@ function clearForm(){
     document.getElementById('pizzaHeat').value = "";
     document.getElementById('toppingList').innerHTML = "";
 
-    checkboxes = document.getElementsByName('pizza');
-    for(i = 0; i < checkboxes.length; i++){
-        checkboxes[i].checked = false;
+    radios = document.getElementsByName('pizza');
+    for(i = 0; i < radios.length; i++){
+        radios[i].checked = false;
     }
 
     pizzaToppings = [];
-    chosenPhotos = [];
 }
