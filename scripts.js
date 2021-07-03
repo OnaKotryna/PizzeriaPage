@@ -67,7 +67,7 @@ function validateFormFields(){
     if(price <= 0 || isNaN(price)) {
         $('#priceNote').show();
         validated = false;
-    } else {
+    } else if (price > 0){
         $('#priceNote').hide();
         validated = validated + true;
     }
