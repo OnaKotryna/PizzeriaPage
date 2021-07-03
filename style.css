@@ -128,7 +128,7 @@ input[type=radio]:checked + label > img{
     width: 160px;
 }
 
-.nameOfPizza{
+.nameOfPizza, .priceOfPizza{
     font-style: italic;
     font-weight: bold;
     font-size: 20px;
