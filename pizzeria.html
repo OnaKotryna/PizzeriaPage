@@ -55,13 +55,16 @@
                         <input type="text" id="pizzaToppings" name="pizzaToppings"> 
                         <div class="validationNote" id="toppingNote"></div>
                         
-                    <button type="button" onclick="addTopping()">Add</button>
+                    <button type="button" class="addTop" onclick="addTopping()">Add Topping</button>
                   
                     <section class="toppingList">
                         <ul id="toppingList"></ul>
                     </section>
 
-                    <label>Photos: <i>(optional)</i></label> 
+                    <label>Photos: <i>(optional)</i></label>
+                    <button class="show" id="showMore" type="button" onclick="showMorePhotos()">More Photos...</button>
+                    <button class="show" id="showLess" type="button" onclick="showLessPhotos()">Less Photos...</button>
+
                     <section class="photos"> 
                         
                         <input type="radio" value="pizza_01" id="pizza01" name="pizza"> 
@@ -74,26 +77,26 @@
                         <label for="pizza03"><img src="photos/pizza_03.jpg"></label>
 
                         <input type="radio" value="pizza_04" id="pizza04" name="pizza"> 
-                        <label for="pizza04"><img src="photos/pizza_04.jpg"></label>
+                        <label for="pizza04" class="morePhotos"><img src="photos/pizza_04.jpg"></label>
 
                         <input type="radio" value="pizza_05" id="pizza05" name="pizza"> 
-                        <label for="pizza05"><img src="photos/pizza_05.jpg"></label>
+                        <label for="pizza05" class="morePhotos"><img src="photos/pizza_05.jpg"></label>
 
                         <input type="radio" value="pizza_06" id="pizza06" name="pizza"> 
-                        <label for="pizza06"><img src="photos/pizza_06.jpg"></label>
+                        <label for="pizza06" class="morePhotos"><img src="photos/pizza_06.jpg"></label>
                         
                         <input type="radio" value="pizza_07" id="pizza07" name="pizza"> 
-                        <label for="pizza07"><img src="photos/pizza_07.jpg"></label>
+                        <label for="pizza07" class="morePhotos"><img src="photos/pizza_07.jpg"></label>
 
                         <input type="radio" value="pizza_08" id="pizza08" name="pizza"> 
-                        <label for="pizza08"><img src="photos/pizza_08.jpg"></label>
+                        <label for="pizza08" class="morePhotos"><img src="photos/pizza_08.jpg"></label>
 
                         <input type="radio" value="pizza_09" id="pizza09" name="pizza"> 
-                        <label for="pizza09"><img src="photos/pizza_09.jpg"></label>
+                        <label for="pizza09" class="morePhotos"><img src="photos/pizza_09.jpg"></label>
 
                         <input type="radio" value="pizza_10" id="pizza010" name="pizza"> 
-                        <label for="pizza010"><img src="photos/pizza_10.jpg"></label>
-
+                        <label for="pizza010" class="morePhotos"><img src="photos/pizza_10.jpg"></label>
+                        
                     </section>
                     
                     <input type="button" id="addPizza" value="Add Pizza"/>

@@ -2,6 +2,8 @@ $(document).ready(function() {
     $('.note').hide(); 
     $('.sort').hide(); 
     $('.validationNote').hide(); 
+    $('.morePhotos').hide(); 
+    $('#showLess').hide(); 
 
     // Button's 'Add Pizza' function
     $('#addPizza').click(function(){
@@ -15,7 +17,10 @@ $(document).ready(function() {
             $('.pizzaMenu').hide(); 
             $('.note').hide(); 
             $('.sort').hide(); 
+            $('.morePhotos').hide(); 
+            $('#showMore').show(); 
             $('.pizzaForm').show();
+            clearForm();
         })
     
     // Button's 'Menu' in Navigation bar function
@@ -109,7 +114,6 @@ function createPizza(){
             pizzas = getPizzas();
             // Checks if name is unique
             if(!verifyUniqueName(pizzaName, pizzas)) {
-                alert("Pizza's name must be unique");
                 $('#nameNote').show();
                 $('#nameNote').text("Pizza's name must be unique");
                 return false;
@@ -319,4 +323,18 @@ function clearForm(){
     }
 
     pizzaToppings = [];
+
+    showLessPhotos(); 
+}
+
+function showMorePhotos(){
+    $('.morePhotos').show(); 
+    $('#showMore').hide(); 
+    $('#showLess').show(); 
+}
+
+function showLessPhotos(){
+    $('.morePhotos').hide();
+    $('#showMore').show(); 
+    $('#showLess').hide(); 
 }

@@ -45,7 +45,7 @@ nav p:hover {
 }
 
 input[type=text], 
-input[type=submit],
+input[type=button],
 input[type=number] {
 	margin: inherit;
 	display: block !important;
@@ -54,6 +54,18 @@ input[type=number] {
 	box-sizing: border-box;
 	width: 200px;
     padding: 7px;
+}
+input[type=button], button {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+    padding: 7px;
+	background-color: #ebdddd;
+	color: #1c0000;
+}
+
+.show {
+	border: 0px;
 }
 
 form {
@@ -134,10 +146,18 @@ input[type=radio]:checked + label > img{
     width: 55px;
 }
 
+/* sort style */
 .sort{
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	box-sizing: border-box;
 	width: 200px;
     padding: 7px;
+}
+
+/* Note style */
+.validationNote {
+	margin-left: 10px;
+	font-style: italic;
+	color: red;
 }
