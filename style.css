@@ -48,7 +48,6 @@ input[type=text],
 input[type=submit],
 input[type=number] {
 	margin: inherit;
-	padding: 5px 5px;
 	display: block !important;
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -69,14 +68,7 @@ label {
 	margin: inherit;
 }
 
-/* photo style */
 .photos img{
-    height: 150px;
-    border-radius: 5px;
-    margin: 5px;
-}
-
-.menuPhoto {
     height: 150px;
     border-radius: 5px;
     margin: 5px;
@@ -96,6 +88,13 @@ input[type=radio]:checked + label > img{
     border-color: #420000;
     border-style: solid;
 
+}
+
+/* menu style */
+.menuPhoto {
+    height: 150px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .pizzaDetails{
@@ -133,4 +132,12 @@ input[type=radio]:checked + label > img{
 
 .deletePizza{
     width: 55px;
+}
+
+.sort{
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-sizing: border-box;
+	width: 200px;
+    padding: 7px;
 }
