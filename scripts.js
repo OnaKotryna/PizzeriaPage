@@ -60,7 +60,7 @@ function validateFormFields(){
         validated = false;
     } else {
         $('#nameNote').hide();
-        validated = validated + true;
+        validated = true;
     }
     
     // Validation of Name field (cannot be empty or negative)
@@ -70,7 +70,7 @@ function validateFormFields(){
         validated = false;
     } else if (price > 0){
         $('#priceNote').hide();
-        validated = validated + true;
+        validated = validated && true;
     }
 
     // Validation of Heat range 1-3
@@ -80,7 +80,7 @@ function validateFormFields(){
         validated = false;
     } else if(heat > 0 && heat < 4){
         $('#heatNote').hide();
-        validated = validated + true;
+        validated = validated && true;
     }
 
     // Validation of Pizza's toppings. Must have at least 2 toppings 
@@ -90,7 +90,7 @@ function validateFormFields(){
         validated = false;
     } else {
         $('#toppingNote').hide();
-        validated = validated + true;
+        validated = validated && true;
     }
 
     return validated;
