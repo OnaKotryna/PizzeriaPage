@@ -64,7 +64,7 @@ input[type=button], button {
 	color: #1c0000;
 }
 
-.show {
+.show, .addTop{
 	border: 0px;
 }
 

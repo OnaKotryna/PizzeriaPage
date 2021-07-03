@@ -18,6 +18,7 @@ $(document).ready(function() {
             $('.note').hide(); 
             $('.sort').hide(); 
             $('.morePhotos').hide(); 
+            $('.validationNote').hide(); 
             $('#showMore').show(); 
             $('.pizzaForm').show();
             clearForm();
