@@ -37,7 +37,7 @@ nav p:hover {
 }
 
 /* form style */
-.pizzaForm {
+.pizzaForm, .pizzaMenu {
     margin: auto;
     width: 50%;
     padding: 10px;
@@ -75,6 +75,7 @@ label {
     border-radius: 5px;
     margin: 5px;
 }
+
 .menuPhoto {
     height: 150px;
     border-radius: 5px;
@@ -83,7 +84,8 @@ label {
 
 .pizzasHeat {
     height: 20px;
-    margin: 5px;
+    margin: opx;
+    margin-left: 5px;
 }
 
 input[type=radio] {
@@ -96,13 +98,39 @@ input[type=radio]:checked + label > img{
 
 }
 
-.pizzaBox{
+.pizzaDetails{
     border: 1px solid #1c0000;
 	border-radius: 10px;
-	width: fit-content;
-	margin: 5px;
+    margin-bottom: 5px;
     padding: 5px;
 	box-shadow: 0px 0px 15px -6px #1c0000;
 	color:  #1c0000;
 	background-color: #FFF5EE;
+    width: 100%;
+}
+
+.priceOfPizza{
+    text-align: right;
+}
+
+.pizzaMenuPhoto{
+    width: 160px;
+}
+
+.nameOfPizza{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.chillies{
+    display: inline-block; 
+}
+
+#deletePizza{
+    float: right;
+}
+
+.deletePizza{
+    width: 55px;
 }

@@ -151,6 +151,7 @@ function displayPizzas(){
 
     if(sessionStorage.pizzas) {
         $('.note').hide(); 
+        
         clearMenu();
         
         pizzas = getPizzas();
@@ -165,32 +166,57 @@ function displayPizzas(){
 
 function displaySortedPizzas(pizzas){
     for(i = 0; i < pizzas.length; i++){
-        a_id = "<article id=\"pizza" + i + "\" class=\"pizzaBox\"> " ;
-        a_pizzaName = "<div class=\"nameOfPizza\">" + pizzas[i].name + "</div>";
-        a_pizzaPrice = "<div class=\"priceOfPizza\">" + pizzas[i].price + " €</div>";
-        a_pizzaToppings = "<div class=\"toppingsOfPizza\">" + pizzas[i].toppings + "</div>";
+        table = "<table class=\"pizzaDetails\"> "
+        a_pizzaName = "<td class=\"nameOfPizza\">" + pizzas[i].name ;
+        a_pizzaPrice = "<td class=\"priceOfPizza\">" + pizzas[i].price + " €</td>";
+        a_pizzaToppings = "<td colspan=\"3\" class=\"toppingsOfPizza\">" + "Toppings: <br/>" + pizzas[i].toppings + "</td>";
 
         if(pizzas[i].heat != null){
-            a_heat = "";
+            a_heat = "<section class=\"chillies\">";
             for(j = 0; j < pizzas[i].heat; j++){
                 chillies = "<img class=\"pizzasHeat\" src=\"photos/chilli.png\">";
                 a_heat = a_heat.concat(chillies);
             }
-            a_heat = a_heat.concat("<br/>");
+            a_heat = a_heat.concat("</section>" + "</td>");
         } else {
-            a_heat = "";
+            a_heat = " </td>";
         }
         
         if (pizzas[i].photo != null) {
-            a_pizzaPhoto = "<img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photo + ".jpg\" >"
+            a_pizzaPhoto = "<td rowspan=\"2\" class=\"pizzaMenuPhoto\"> <img class=\"menuPhoto\" src=\"photos/" +  pizzas[i].photo + ".jpg\" > </td>"
         } else {
             a_pizzaPhoto = "";
         }
 
-        pizzaArticleDetails = a_pizzaName + a_heat + a_pizzaPrice + a_pizzaToppings + a_pizzaPhoto ;
+        deleteButton = "<td rowspan=\"2\" class=\"deletePizza\"><button onclick=\"deletePizza('"+ pizzas[i].name +"')\" id=\"deletePizza\">Delete</button></td>"
+
+        pizzaArticleDetails = "<tr>" + table + a_pizzaPhoto + a_pizzaName + a_heat + a_pizzaPrice + deleteButton + "</tr>" + 
+                            "<tr>" + a_pizzaToppings + "</tr> </table>";
         
-        $('.pizzaMenu').append(a_id + pizzaArticleDetails + "</article>");
+        $('.pizzaMenu').append("<article id=\"pizza" + i + "\" class=\"pizzaBox\"> " + pizzaArticleDetails + "</article>");
     }
+}
+
+
+function deletePizza(pizzaToDelete){
+    alert("AAAAAAAAAAAAAAAAAAAA");
+    pizzas = getPizzas();
+    for(i = 0; i < pizzas.length; i++){
+        if(pizzas[i].name == pizzaToDelete){
+            const index = pizzas.indexOf(pizzas[i]);
+            if (index > -1) {
+                pizzas.splice(index, 1);
+                var clearMenu = document.getElementById('pizza' + index);
+                $(clearMenu).remove();
+            }
+        }
+    }
+        
+    
+
+    sessionStorage.setItem('pizzas', JSON.stringify(pizzas));
+    
+    displayPizzas();
 }
 
 function getSortedPizzaList(pizzas){
